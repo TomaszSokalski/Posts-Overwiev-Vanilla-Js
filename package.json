@@ -1,0 +1,21 @@
+{
+  "name": "users-overview-vanilla-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "deploy": "gh-pages -d dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://TomaszSokalski.github.io/Users-Overwiv-Vanilla-Js",
+  "author": "Tomasz Sokalski",
+  "license": "ISC",
+  "dependencies": {
+    "vanilla-framework": "^3.13.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.3"
+  }
+}
