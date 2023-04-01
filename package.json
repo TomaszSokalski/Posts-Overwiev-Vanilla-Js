@@ -9,7 +9,7 @@
     "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://TomaszSokalski.github.io/Users-Overwiv-Vanilla-Js",
+  "homepage": "https://TomaszSokalski.github.io/Users-Overwiev-Vanilla-Js",
   "author": "Tomasz Sokalski",
   "license": "ISC",
   "dependencies": {
