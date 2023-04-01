@@ -1,0 +1,21 @@
+.nav {
+  background-color: #6ea8fe;
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    &-element {
+      padding: 1.5rem;
+
+    }
+  }
+}
+
+.title {
+  color: #000000;
+  text-decoration: none;
+  text-transform: uppercase;
+  &:hover {
+    text-decoration: none;
+  }
+}
