@@ -9,7 +9,7 @@ class UsersService {
     getUserById(id) {
         return apiService.get(`${this._basePath}/${id}`);
     }
-    getPostsByUserId(userId) {
+    getUsersByUserId(userId) {
         return apiService.get(`${this._basePath}?userId=${userId}`);
     }
     create(obj) {

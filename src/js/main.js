@@ -1,3 +1,7 @@
-import { navigation } from './Navigation'
+import { navigation } from './Navigation';
+import { users } from './Users'
 
-navigation.init();
+window.onload = () => {
+    navigation.init();
+    users.init();
+}
