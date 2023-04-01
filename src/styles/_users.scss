@@ -14,12 +14,10 @@
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
-}
-
-.card__container > :first-child {
-  padding: 20px;
-}
-
-.card__container > * {
-  margin: 10px;
+  &__container > :first-child {
+    padding: 20px;
+  }
+  &__container > * {
+    margin: 10px;
+  }
 }
