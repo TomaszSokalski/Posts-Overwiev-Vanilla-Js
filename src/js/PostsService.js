@@ -1,7 +1,7 @@
 import { apiService } from './ApiService'
 
-class UsersService {
-    _basePath = '/users';
+class PostsService {
+    _basePath = '/posts';
 
     getAll() {
         return apiService.get(this._basePath);
@@ -23,4 +23,4 @@ class UsersService {
     }
 }
 
-export const userService = new UsersService();
+export const userService = new PostsService();

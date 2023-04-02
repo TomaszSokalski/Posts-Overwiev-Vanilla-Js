@@ -1,7 +1,7 @@
 import { navigation } from './Navigation';
-import { users } from './Users'
+import { posts } from './Posts'
 
 window.onload = () => {
     navigation.init();
-    users.init();
+    posts.init();
 }

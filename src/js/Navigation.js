@@ -11,8 +11,8 @@ class Navigation {
         //language=html
         navigationContent = `
             <ul class="nav__list">
-                <li class="nav__list-element"><a class="title">Users overview</a></li>
-                <li class="nav__list-element"><button class="nav-btn btn">Add user <i class="p-icon--plus"></i></button></li>
+                <li class="nav__list-element"><a class="title">Posts overview</a></li>
+                <li class="nav__list-element"><button class="nav-btn btn">Add post<i class="p-icon--plus"></i></button></li>
             </ul>
         `;
 

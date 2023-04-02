@@ -1,11 +1,14 @@
-.users {
+.posts {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   flex-flow: wrap;
 }
 
 .card {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 375px;
   text-align: center;
   margin: 25px;
   overflow: hidden;
@@ -15,7 +18,7 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
   &__container > :first-child {
-    padding: 20px;
+    padding: 10px;
   }
   &__container > * {
     margin: 10px;

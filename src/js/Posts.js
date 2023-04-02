@@ -1,7 +1,7 @@
-import { userService } from './UsersService';
-import { USERS } from './elements'
+import { userService } from './PostsService';
+import { POSTS } from './elements'
 
-class Users {
+class Posts {
     users = [];
 
     init() {
@@ -17,27 +17,26 @@ class Users {
         }
     }
 
-    _render(users) {
+    _render(posts) {
         let usersContent = '';
 
-        for (const el of users) {
+        for (const el of posts) {
             //language=html
             usersContent += `
                 <div class="card">
                     <div class="card__container">
-                        <p><i class="p-icon--user"></i></p>
-                        <h2>${el.name}</h2>
-                        <p>${el.email}</p>
-                        <p>${el.address.city}</p>
-                        <p>${el.phone}</p>
+                        <h5>Post no.${el.id}</h5>
+                        <p><b>${el.title}</b></p>
+                        <p>${el.body}</p>
+                        <button>Delete <i class="p-icon--delete"></i></button>
                     </div>
                 </div>
         `;
 
-            USERS.innerHTML = usersContent;
-            USERS.classList.add('users');
+            POSTS.innerHTML = usersContent;
+            POSTS.classList.add('posts');
         }
     }
 }
 
-export const users = new Users();
+export const posts = new Posts();
