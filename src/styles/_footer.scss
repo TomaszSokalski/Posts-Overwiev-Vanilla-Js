@@ -1,0 +1,10 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  bottom: 0;
+  background-color: #6ea8fe;
+  &__text {
+    margin: 0;
+  }
+}
