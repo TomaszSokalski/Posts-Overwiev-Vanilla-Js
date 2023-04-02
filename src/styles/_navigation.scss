@@ -1,5 +1,7 @@
 .nav {
   background-color: #6ea8fe;
+  position: sticky;
+  top: 0;
   &__list {
     display: flex;
     justify-content: space-between;
