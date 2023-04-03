@@ -1,8 +1,10 @@
-import { NAVIGATION } from './elements'
+import { NAVIGATION, DIALOG } from './elements';
+import { postsService } from './PostsService'
 
-class Navigation {
+class Navigation  {
     init() {
         this._render(NAVIGATION);
+        this._addTask();
     }
 
     _render(parentElement) {
@@ -18,6 +20,53 @@ class Navigation {
 
         parentElement.innerHTML = navigationContent;
         parentElement.classList.add('nav');
+    }
+
+    _addTask() {
+        NAVIGATION.addEventListener('click', e => {
+            if (e.target.classList.contains('nav-btn')) {
+                DIALOG.showModal();
+
+                let dialogContent = '';
+                //language=html
+                DIALOG.innerHTML = `
+                <form>
+                    <input type="text" name="title" placeholder="Post title" required>
+                    <textarea type="text" name="body" placeholder="Post description"></textarea>
+                    <select name="userId">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9"><9/option>
+                        <option value="10">10</option>
+                    </select>
+                    <div><button>Add post</button></div>
+                    <div><button class="btn-close btn">Close</button></div>
+                </form>
+                `;
+                const FORM = document.querySelector('form');
+                FORM.addEventListener('submit', e => {
+                    e.preventDefault();
+                    const formData = new FormData(FORM);
+                    const payLoad = {};
+
+                    for (const [key, value] of formData) {
+                        payLoad[key] = value
+                    }
+                    postsService.create(payLoad);
+                    DIALOG.close();
+                    FORM.reset();
+                });
+                document.querySelector('.btn-close').addEventListener('click', () => {
+                    DIALOG.close();
+                });
+            }
+        })
     }
 }
 

@@ -2,3 +2,9 @@
 @import 'navigation';
 @import 'posts';
 @import 'footer';
+@import 'dialog';
+
+:root {
+  display: flex;
+  flex-direction: column;
+}
