@@ -5,12 +5,12 @@ class Posts {
     users = [];
 
     init() {
-        this.getAll();
+        this._getAll();
         this._deleteTask();
         this._showTaskDescription();
     }
 
-    async getAll() {
+    async _getAll() {
         try {
             this.users = await postsService.getAll();
             this._render(this.users);
