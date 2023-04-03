@@ -5,6 +5,7 @@ class Navigation  {
     init() {
         this._render(NAVIGATION);
         this._addTask();
+        this._scrollToTop();
     }
 
     _render(parentElement) {
@@ -65,6 +66,14 @@ class Navigation  {
                 document.querySelector('.btn-close').addEventListener('click', () => {
                     DIALOG.close();
                 });
+            }
+        })
+    }
+
+    _scrollToTop() {
+        NAVIGATION.addEventListener('click', e => {
+            if (e.target.classList.contains('title')) {
+                window.scrollTo({top: 0});
             }
         })
     }
