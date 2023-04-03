@@ -1,11 +1,34 @@
-dialog {
+.form {
   margin: auto;
   width: 50%;
   height: 50%;
   padding: 2%;
   text-align: center;
 
+  &__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
   & * button:first-child {
     margin-bottom: 10px;
+  }
+}
+
+.details {
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  padding: 2%;
+  text-align: center;
+
+  &__card {
+    justify-content: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
