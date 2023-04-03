@@ -1,5 +1,5 @@
 import { postsService } from './PostsService';
-import { POSTS } from './elements'
+import {DIALOG_DETAILS, POSTS} from './elements';
 
 class Posts {
     users = [];
@@ -7,6 +7,7 @@ class Posts {
     async init() {
         await this.getAll();
         this._deleteTask();
+        this._showTaskDescription();
     }
 
     async getAll() {
@@ -26,10 +27,10 @@ class Posts {
             postsContent += `
                 <div class="card">
                     <div class="card__container">
-                        <h5>${el.id}</h5>
-                        <p><b>${el.title}</b></p>
-                        <p>${el.body}</p>
-                        <button class="btn-delete btn">Delete <i class="p-icon--delete"></i></button>
+                        <h5>Post no.<span>${el.id}</span></h5>
+                        <p>${el.title}</p>
+                        <button class="btn btn-details btn__primary ">Show description</button>
+                        <button class="btn btn-delete btn__warn ">Delete <i class="p-icon--delete"></i></button>
                     </div>
                 </div>
         `;
@@ -43,8 +44,35 @@ class Posts {
         POSTS.addEventListener('click', e => {
             e.preventDefault();
             if (e.target.classList.contains('btn-delete')) {
-                postsService.deleteById(e.target.closest('div').querySelector('h5').innerHTML);
+                postsService.deleteById(e.target.closest('div').querySelector('h5 > span').innerHTML);
                 e.target.closest('div').parentNode.remove();
+            }
+        })
+    }
+
+    _showTaskDescription() {
+        POSTS.addEventListener('click', e => {
+            console.log(e)
+            if (e.target.classList.contains('btn-details')) {
+                DIALOG_DETAILS.showModal();
+                const parentDiv = e.target.closest('div');
+
+
+                let detailsContent = '';
+
+                //language=html
+                detailsContent += `
+                    <div class="details__card">
+                        <h5>${parentDiv.querySelector('h5 > span').innerHTML}</span></h5>
+                        <p>${parentDiv.querySelector('p').innerHTML}</p>
+                        <button class="btn btn-close btn__warn">Close</button>
+                    </div>
+                `;
+
+                DIALOG_DETAILS.innerHTML = detailsContent;
+                DIALOG_DETAILS.querySelector('.btn-close').addEventListener('click', () => {
+                    DIALOG_DETAILS.close();
+                })
             }
         })
     }
