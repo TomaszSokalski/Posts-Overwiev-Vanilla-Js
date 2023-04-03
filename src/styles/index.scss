@@ -3,8 +3,14 @@
 @import 'posts';
 @import 'footer';
 @import 'dialog';
+@import 'buttons';
 
 :root {
   display: flex;
   flex-direction: column;
+
+  --black: #000000;
+  --white: #FFFFFF;
+  --green: #4CAF50;
+  --red: #fe1a00;
 }
