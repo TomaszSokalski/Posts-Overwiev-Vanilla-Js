@@ -49,29 +49,8 @@ class Navigation  {
                     for (const [key, value] of formData) {
                         this.payLoad[key] = value;
                     }
-                    const postData = async () => {
-                        this.payLoad = await postsService.create(this.payLoad);
 
-                        let postContent = '';
-
-                        //lanugage=HTML
-                        postContent += `
-                        <div class="card__container">
-                            <h5>Post no.<span>${this.payLoad.id}</span></h5>
-                            <p>${this.payLoad.title}</p>
-                            <button class="btn btn-details btn__primary ">Show description</button>
-                            <button class="btn btn-delete btn__warn ">Delete <i class="p-icon--delete"></i></button>
-                        </div>
-                        `;
-
-                        const newPost = document.createElement('div');
-                        newPost.classList.add('card');
-                        newPost.innerHTML = postContent;
-
-                        POSTS.appendChild(newPost);
-                    }
-
-                    postData();
+                    this._postData();
                     DIALOG_FORM.close();
                     FORM.reset();
                 });
@@ -80,6 +59,28 @@ class Navigation  {
                 });
             }
         })
+    }
+
+    async _postData() {
+        this.payLoad = await postsService.create(this.payLoad);
+
+        let postContent = '';
+
+        //lanugage=HTML
+        postContent += `
+                    <div class="card__container">
+                        <h5>Post no.<span>${this.payLoad.id}</span></h5>
+                        <p>${this.payLoad.title}</p>
+                        <button class="btn btn-details btn__primary ">Show description</button>
+                        <button class="btn btn-delete btn__warn ">Delete <i class="p-icon--delete"></i></button>
+                    </div>
+                    `;
+
+        const newPost = document.createElement('div');
+        newPost.classList.add('card');
+        newPost.innerHTML = postContent;
+
+        POSTS.appendChild(newPost);
     }
 
     _scrollToTop() {
