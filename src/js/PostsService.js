@@ -23,4 +23,4 @@ class PostsService {
     }
 }
 
-export const userService = new PostsService();
+export const postsService = new PostsService();
