@@ -1,11 +1,11 @@
-import { postsService } from './PostsService';
-import {DIALOG_DETAILS, POSTS} from './elements';
+import { postsService } from '../services/PostsService';
+import {DIALOG_DETAILS, POSTS} from '../data/elements';
 
 class Posts {
     users = [];
 
-    async init() {
-        await this.getAll();
+    init() {
+        this.getAll();
         this._deleteTask();
         this._showTaskDescription();
     }
@@ -33,7 +33,7 @@ class Posts {
                         <button class="btn btn-delete btn__warn ">Delete <i class="p-icon--delete"></i></button>
                     </div>
                 </div>
-        `;
+            `;
 
             POSTS.innerHTML = postsContent;
             POSTS.classList.add('posts');

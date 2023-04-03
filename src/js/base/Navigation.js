@@ -1,5 +1,5 @@
-import {NAVIGATION, DIALOG_FORM, POSTS} from './elements';
-import { postsService } from './PostsService'
+import { NAVIGATION, DIALOG_FORM, POSTS } from '../data/elements';
+import { postsService } from '../services/PostsService';
 
 class Navigation  {
     payLoad = {};
@@ -33,27 +33,28 @@ class Navigation  {
                 let dialogContent = '';
                 //language=html
                 DIALOG_FORM.innerHTML = `
-                <form class="form__data">
-                    <h1>Add post</h1>
-                    <textarea type="text" name="title" placeholder="Post description" required></textarea>
-                    <div><button type="submit" class="btn btn__primary">Add</button></div>
-                    <div><button type="button" class="btn btn-close btn__warn">Close</button></div>
-                </form>
+                    <form class="form__data">
+                        <h1>Add post</h1>
+                        <textarea type="text" name="title" placeholder="Post description" required></textarea>
+                        <div><button type="submit" class="btn btn__primary">Add</button></div>
+                        <div><button type="button" class="btn btn-close btn__warn">Close</button></div>
+                    </form>
                 `;
                 const FORM = document.querySelector('form');
-                FORM.addEventListener('submit', e => {
-                    e.preventDefault();
-                    const formData = new FormData(FORM);
+                    FORM.addEventListener('submit', e => {
+                        e.preventDefault();
+                        const formData = new FormData(FORM);
 
 
-                    for (const [key, value] of formData) {
-                        this.payLoad[key] = value;
-                    }
+                        for (const [key, value] of formData) {
+                            this.payLoad[key] = value;
+                        }
 
-                    this._postData();
-                    DIALOG_FORM.close();
-                    FORM.reset();
-                });
+                        this._postData();
+                        DIALOG_FORM.close();
+                        FORM.reset();
+                    });
+
                 document.querySelector('.btn-close').addEventListener('click', () => {
                     DIALOG_FORM.close();
                 });
@@ -68,13 +69,13 @@ class Navigation  {
 
         //lanugage=HTML
         postContent += `
-                    <div class="card__container">
-                        <h5>Post no.<span>${this.payLoad.id}</span></h5>
-                        <p>${this.payLoad.title}</p>
-                        <button class="btn btn-details btn__primary ">Show description</button>
-                        <button class="btn btn-delete btn__warn ">Delete <i class="p-icon--delete"></i></button>
-                    </div>
-                    `;
+            <div class="card__container">
+                <h5>Post no.<span>${this.payLoad.id}</span></h5>
+                <p>${this.payLoad.title}</p>
+                <button class="btn btn-details btn__primary ">Show description</button>
+                <button class="btn btn-delete btn__warn ">Delete <i class="p-icon--delete"></i></button>
+            </div>
+            `;
 
         const newPost = document.createElement('div');
         newPost.classList.add('card');

@@ -1,6 +1,6 @@
-import { navigation } from './Navigation';
-import { posts } from './Posts';
-import { footer } from './Footer';
+import { navigation } from './base/Navigation';
+import { posts } from './base/Posts';
+import { footer } from './base/Footer';
 
 window.onload = () => {
     navigation.init();

@@ -1,5 +1,5 @@
 .nav {
-  background-color: #6ea8fe;
+  background-color: var(--blue);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -15,7 +15,7 @@
 }
 
 .title {
-  color: #000000;
+  color: var(--black);
   text-decoration: none;
   text-transform: uppercase;
   &:hover {

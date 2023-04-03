@@ -1,4 +1,4 @@
-import { FOOTER } from './elements'
+import { FOOTER } from '../data/elements'
 
 class Footer {
     init() {
