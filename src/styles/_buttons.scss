@@ -1,0 +1,11 @@
+.btn {
+  border: 2px solid;
+
+  &__primary {
+    background-color: var(--light-blue);
+  }
+
+  &__warn {
+  background-color: var(--red);
+  }
+}

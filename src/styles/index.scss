@@ -1,3 +1,17 @@
 @import 'reset';
 @import 'navigation';
-@import 'users';
+@import 'posts';
+@import 'footer';
+@import 'dialog';
+@import 'buttons';
+
+:root {
+  display: flex;
+  flex-direction: column;
+
+  --black: #000000;
+  --white: #FFFFFF;
+  --blue : #2271b1;
+  --light-blue: #72aee6;
+  --red: #f86368;
+}
