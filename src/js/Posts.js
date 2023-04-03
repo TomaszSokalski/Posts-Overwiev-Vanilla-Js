@@ -52,7 +52,6 @@ class Posts {
 
     _showTaskDescription() {
         POSTS.addEventListener('click', e => {
-            console.log(e)
             if (e.target.classList.contains('btn-details')) {
                 DIALOG_DETAILS.showModal();
                 const parentDiv = e.target.closest('div');

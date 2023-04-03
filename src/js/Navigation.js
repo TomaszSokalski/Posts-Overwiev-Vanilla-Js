@@ -35,9 +35,9 @@ class Navigation  {
                 <form class="form__data">
                     <h1>Add post</h1>
                     <input type="text" name="title" placeholder="Post title" required>
-                    <textarea type="text" name="body" placeholder="Post description"></textarea>
-                    <div><button class="btn btn__primary">Add</button></div>
-                    <div><button class="btn btn-close btn__warn">Close</button></div>
+                    <textarea type="text" name="body" placeholder="Post description" required></textarea>
+                    <div><button type="submit" class="btn btn__primary">Add</button></div>
+                    <div><button type="button" class="btn btn-close btn__warn">Close</button></div>
                 </form>
                 `;
                 const FORM = document.querySelector('form');
