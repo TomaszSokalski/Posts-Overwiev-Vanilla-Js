@@ -557,50 +557,113 @@ function hmrAccept(bundle, id) {
 }
 
 },{}],"1SICI":[function(require,module,exports) {
-var _navigation = require("./Navigation");
-var _users = require("./Users");
+var _navigation = require("./base/Navigation");
+var _posts = require("./base/Posts");
+var _footer = require("./base/Footer");
 window.onload = ()=>{
     (0, _navigation.navigation).init();
-    (0, _users.users).init();
+    (0, _posts.posts).init();
+    (0, _footer.footer).init();
 };
 
-},{"./Navigation":"75QFP","./Users":"bDTTT"}],"75QFP":[function(require,module,exports) {
+},{"./base/Navigation":"2FmsI","./base/Posts":"4Pw4N","./base/Footer":"3WNEA"}],"2FmsI":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "navigation", ()=>navigation);
-var _elements = require("./elements");
+var _elements = require("../data/elements");
+var _postsService = require("../services/PostsService");
 class Navigation {
+    payLoad = {};
     init() {
         this._render((0, _elements.NAVIGATION));
+        this._addTask();
+        this._scrollToTop();
     }
     _render(parentElement) {
         let navigationContent = "";
         //language=html
         navigationContent = `
             <ul class="nav__list">
-                <li class="nav__list-element"><a class="title">Users overview</a></li>
-                <li class="nav__list-element"><button class="nav-btn btn">Add user <i class="p-icon--plus"></i></button></li>
+                <li class="nav__list-element"><a class="title">Posts overview</a></li>
+                <li class="nav__list-element"><button class="btn nav-btn btn__primary">Add post<i class="p-icon--plus"></i></button></li>
             </ul>
         `;
         parentElement.innerHTML = navigationContent;
         parentElement.classList.add("nav");
     }
+    _addTask() {
+        (0, _elements.NAVIGATION).addEventListener("click", (e)=>{
+            if (e.target.classList.contains("nav-btn")) {
+                (0, _elements.DIALOG_FORM).showModal();
+                let dialogContent = "";
+                //language=html
+                (0, _elements.DIALOG_FORM).innerHTML = `
+                    <form class="form__data">
+                        <h1>Add post</h1>
+                        <textarea type="text" name="title" placeholder="Post description" required></textarea>
+                        <div><button type="submit" class="btn btn__primary">Add</button></div>
+                        <div><button type="button" class="btn btn-close btn__warn">Close</button></div>
+                    </form>
+                `;
+                const FORM = document.querySelector("form");
+                FORM.addEventListener("submit", (e)=>{
+                    e.preventDefault();
+                    const formData = new FormData(FORM);
+                    for (const [key, value] of formData)this.payLoad[key] = value;
+                    this._postData();
+                    (0, _elements.DIALOG_FORM).close();
+                    FORM.reset();
+                });
+                document.querySelector(".btn-close").addEventListener("click", ()=>{
+                    (0, _elements.DIALOG_FORM).close();
+                });
+            }
+        });
+    }
+    async _postData() {
+        this.payLoad = await (0, _postsService.postsService).create(this.payLoad);
+        let postContent = "";
+        //lanugage=HTML
+        postContent += `
+            <div class="card__container">
+                <h5>Post no.<span>${this.payLoad.id}</span></h5>
+                <p>${this.payLoad.title}</p>
+                <button class="btn btn-details btn__primary ">Show description</button>
+                <button class="btn btn-delete btn__warn ">Delete <i class="p-icon--delete"></i></button>
+            </div>
+            `;
+        const newPost = document.createElement("div");
+        newPost.classList.add("card");
+        newPost.innerHTML = postContent;
+        (0, _elements.POSTS).appendChild(newPost);
+    }
+    _scrollToTop() {
+        (0, _elements.NAVIGATION).addEventListener("click", (e)=>{
+            if (e.target.classList.contains("title")) window.scrollTo({
+                top: 0
+            });
+        });
+    }
 }
 const navigation = new Navigation();
 
-},{"./elements":"d38dq","@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}],"d38dq":[function(require,module,exports) {
+},{"../data/elements":"cgY6J","../services/PostsService":"alnRM","@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}],"cgY6J":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getElement", ()=>getElement);
 parcelHelpers.export(exports, "getElements", ()=>getElements);
 parcelHelpers.export(exports, "NAVIGATION", ()=>NAVIGATION);
-parcelHelpers.export(exports, "USERS", ()=>USERS);
+parcelHelpers.export(exports, "POSTS", ()=>POSTS);
 parcelHelpers.export(exports, "FOOTER", ()=>FOOTER);
+parcelHelpers.export(exports, "DIALOG_FORM", ()=>DIALOG_FORM);
+parcelHelpers.export(exports, "DIALOG_DETAILS", ()=>DIALOG_DETAILS);
 const getElement = (selector)=>document.querySelector(selector);
 const getElements = (selector)=>document.querySelectorAll(selector);
 const NAVIGATION = getElement("nav");
-const USERS = getElement("section");
+const POSTS = getElement("section");
 const FOOTER = getElement("footer");
+const DIALOG_FORM = getElement(".form");
+const DIALOG_DETAILS = getElement(".details");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}],"lkvqk":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -632,54 +695,13 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"bDTTT":[function(require,module,exports) {
+},{}],"alnRM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "users", ()=>users);
-var _usersService = require("./UsersService");
-var _elements = require("./elements");
-class Users {
-    users = [];
-    init() {
-        this.getAll();
-    }
-    async getAll() {
-        try {
-            this.users = await (0, _usersService.userService).getAll();
-            this._render(this.users);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    _render(users) {
-        let usersContent = "";
-        for (const el of users){
-            //language=html
-            usersContent += `
-                <div class="card">
-                    <div class="card__container">
-                        <p><i class="p-icon--user"></i></p>
-                        <h2>${el.name}</h2>
-                        <p>${el.email}</p>
-                        <p>${el.address.city}</p>
-                        <p>${el.phone}</p>
-                    </div>
-                </div>
-        `;
-            (0, _elements.USERS).innerHTML = usersContent;
-            (0, _elements.USERS).classList.add("users");
-        }
-    }
-}
-const users = new Users();
-
-},{"./UsersService":"kSy0k","./elements":"d38dq","@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}],"kSy0k":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "userService", ()=>userService);
+parcelHelpers.export(exports, "postsService", ()=>postsService);
 var _apiService = require("./ApiService");
-class UsersService {
-    _basePath = "/users";
+class PostsService {
+    _basePath = "/posts";
     getAll() {
         return (0, _apiService.apiService).get(this._basePath);
     }
@@ -699,9 +721,9 @@ class UsersService {
         return (0, _apiService.apiService).delete(`${this._basePath}/${id}`);
     }
 }
-const userService = new UsersService();
+const postsService = new PostsService();
 
-},{"./ApiService":"9lwpB","@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}],"9lwpB":[function(require,module,exports) {
+},{"./ApiService":"jlgQs","@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}],"jlgQs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "apiService", ()=>apiService);
@@ -742,6 +764,99 @@ class ApiService {
 }
 const apiService = new ApiService();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}]},["g5xpA","1SICI"], "1SICI", "parcelRequire4502")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}],"4Pw4N":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "posts", ()=>posts);
+var _postsService = require("../services/PostsService");
+var _elements = require("../data/elements");
+class Posts {
+    users = [];
+    init() {
+        this._getAll();
+        this._deleteTask();
+        this._showTaskDescription();
+    }
+    async _getAll() {
+        try {
+            this.users = await (0, _postsService.postsService).getAll();
+            this._render(this.users);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    _render(posts) {
+        let postsContent = "";
+        for (const el of posts){
+            //language=html
+            postsContent += `
+                <div class="card">
+                    <div class="card__container">
+                        <h5>Post no.<span>${el.id}</span></h5>
+                        <p>${el.title}</p>
+                        <button class="btn btn-details btn__primary ">Show description</button>
+                        <button class="btn btn-delete btn__warn ">Delete <i class="p-icon--delete"></i></button>
+                    </div>
+                </div>
+            `;
+            (0, _elements.POSTS).innerHTML = postsContent;
+            (0, _elements.POSTS).classList.add("posts");
+        }
+    }
+    _deleteTask() {
+        (0, _elements.POSTS).addEventListener("click", (e)=>{
+            e.preventDefault();
+            if (e.target.classList.contains("btn-delete")) {
+                (0, _postsService.postsService).deleteById(e.target.closest("div").querySelector("h5 > span").innerHTML);
+                e.target.closest("div").parentNode.remove();
+            }
+        });
+    }
+    _showTaskDescription() {
+        (0, _elements.POSTS).addEventListener("click", (e)=>{
+            if (e.target.classList.contains("btn-details")) {
+                (0, _elements.DIALOG_DETAILS).showModal();
+                const parentDiv = e.target.closest("div");
+                let detailsContent = "";
+                //language=html
+                detailsContent += `
+                    <div class="details__card">
+                        <h5>${parentDiv.querySelector("h5 > span").innerHTML}</span></h5>
+                        <p>${parentDiv.querySelector("p").innerHTML}</p>
+                        <button class="btn btn-close btn__warn">Close</button>
+                    </div>
+                `;
+                (0, _elements.DIALOG_DETAILS).innerHTML = detailsContent;
+                (0, _elements.DIALOG_DETAILS).querySelector(".btn-close").addEventListener("click", ()=>{
+                    (0, _elements.DIALOG_DETAILS).close();
+                });
+            }
+        });
+    }
+}
+const posts = new Posts();
+
+},{"../services/PostsService":"alnRM","../data/elements":"cgY6J","@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}],"3WNEA":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "footer", ()=>footer);
+var _elements = require("../data/elements");
+class Footer {
+    init() {
+        this._render();
+    }
+    _render() {
+        let footerContent = "";
+        //language=html
+        footerContent = `
+            <p class="footer__text">Copyright &copy; Tomasz Sokalski</p>
+        `;
+        (0, _elements.FOOTER).innerHTML = footerContent;
+        (0, _elements.FOOTER).classList.add("footer");
+    }
+}
+const footer = new Footer();
+
+},{"../data/elements":"cgY6J","@parcel/transformer-js/src/esmodule-helpers.js":"lkvqk"}]},["g5xpA","1SICI"], "1SICI", "parcelRequire4502")
 
 //# sourceMappingURL=index.18dbc454.js.map
